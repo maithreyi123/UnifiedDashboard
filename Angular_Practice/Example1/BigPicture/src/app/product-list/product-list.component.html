@@ -1,0 +1,12 @@
+<p>product-list works!</p>
+
+<div class='card' *ngIf='product'>
+    <div class='card-header'>
+     {{pageTitle +': ' + product.productName}}
+    </div>
+    <button class="btn btn-success" type="button" (click)="onBack()" pButton icon="pi pi-info-circle"
+                        label="Import Requirements">
+                        <span>Back</span>
+     </button>
+
+</div>

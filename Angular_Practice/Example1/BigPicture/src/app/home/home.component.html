@@ -1,0 +1,98 @@
+<html>
+<head> 
+</head>
+<body>   <!-- /// READ COMMENTS PROPERLY  ///   -->
+    <div style="text-align: center;" class = "welcome">
+       Welcome to  {{PageTitle}}..!!  <!--interpolation databinding - one way binding-->
+    </div>
+    <div>{{PageTitle}}</div>
+
+<div>                   <!--this div is created for routing example using routerLink and -->
+    <nav class='navbar navbar-expand navbar-light bg-light'>
+
+        <ul class='nav nav-pills'>
+            <li><a class='nav-link' [routerLink]="['/welcome']">welcome</a></li>     <!--defining routerlinks to provoide links to navigate to that components-->
+            <li><a class='nav-link' [routerLink]="['/products']">ProductList</a></li> 
+            <li><a class='nav-link' [routerLink]="['/products', 0, 'edit']">AddProduct</a></li> <!--home component has all the product lists-->
+        </ul>
+    </nav>
+</div>
+
+
+
+
+    <div>Filter: </div>
+    <div>
+        <input type ='text'
+        [(ngModel)]='listFilter'/>  <!--example for ngModel - two way data binding-->
+    </div>
+    <div>Filtered by:</div>
+    <div>
+        {{listFilter}}
+    </div>
+    <div class ="table-response">
+        <!-- Example for *ngIf Directive, if products array has data then it displays table -->
+        <table class ="table"
+            *ngIf ="Products && Products.length">
+            <thead>
+                <tr>
+                    <th> <!--table header -->
+                    <button class='btn btn-primary'
+                    (click)='toggleImage()'>
+                      {{showImage ? 'Hide' : 'Show'}} Image  <!--if showimage is false, btn shld be showImage, if true btn shld be hideImage-->
+                    </button>
+                </th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Code</th>
+                <th>StarRating</th>
+            </tr> 
+            </thead>
+            <tbody>
+                <tr *ngFor = 'let product of filteredProduct'>
+                    <td class ="image">   <!--if condition : if showImage value returns true then it displays the images-->
+                        <img *ngIf='showImage'  
+                        [src] = 'product.productImage'
+                        [style.width.px]='imageWidth'
+                        [style.height.px]='imageHeight'><!--property Binding -->
+                    </td>  <!--table body tag, this 1st one is left as according to show items th-->
+                    <td>{{product.productId}}</td> <!-- this refers to id in table header -->
+                    <!-- <td>{{product.productName}}</td> -->
+
+            <!--****  this is used for routerlink to pass parameters in the url, here passing id as parameter ***-->
+              <!--pass the parameter value as second element in array list without single quotes and encolse the parameter within anchor tag-->
+               <!--this creates links for all the productNames-->
+                    <td>
+                        <a [routerLink] = "['/products', product.productId]">{{product.productName}}</a>  <!--this is the way to pass id as paramter to /products url-->
+        
+                    </td>
+
+                    <td>{{product.productPrice | currency : 'USD': 'symbol': '1.2-2'}}</td> <!--example for pipes, transforming to US currency-->
+                    <td>{{product.productCode | convertToSpace: '-'}}</td> <!--example for custom pipe, here '-' is passed as character parameter to pipe and productcode is passed as value-->
+              
+                    <!--<td>{{product.startRating}}</td>--> <!--initially we r calling rating property to display numbers like 3.2 -->
+              <!--<td><app-star-component></app-star-component></td>-->   <!--but to diplay stars we created starcomponent and adding that component directive here-->
+             
+              <!--<td><app-star-component [rating]= 'product.startRating'></app-star-component></td>-->   <!--using property binding, so when rating change occurs it exceuts onchange method, performs logic inside  that method and displays stars based on that-->
+               <!--now rating contains some value which is send as input to nested component (star component)-->
+             
+               <td><app-star-component [rating]= 'product.startRating'
+                    (ratingClicked) = 'OnRatingClicked($event)'
+                    ></app-star-component></td><!--binding the event raised form star component using event binding property and to process the event we r declaring a onratingclick()-->
+              <!--example for routing -->
+              
+                <td><button class="btn btn-primary"
+                  [routerLink] = "['/products', product.productId, 'edit']">Edit  <!--this is the way to pass id as paramter to /products url-->
+                </button>
+                </td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>
+

@@ -1,0 +1,37 @@
+[
+    {
+      "productId" : 11,
+      "productName" : "pen",
+      "productPrice" : 50,
+      "productImage" : "/assets/images/pen.png",
+      "productCode" : "gnd-880",     
+      "startRating" : "3.2"
+    },
+    {
+      "productId" : 12,
+      "productName" : "Table",
+      "productPrice" : 500,
+      "productImage" : "/assets/images/table.png",
+      "productCode" : "tnx-775",
+      "startRating" : "5.0"
+    },
+    {
+        "productId" : 13,
+        "productName" : "ball",
+        "productPrice" : 506,
+        "productImage" : "/assets/images/pen.png",
+        "productCode" : "rxm-887",     
+        "startRating" : "4.8"
+      },
+
+      {
+        "productId" : 14,
+        "productName" : "bench",
+        "productPrice" : 1000,
+        "productImage" : "/assets/images/pen.png",
+        "productCode" : "cdv-3337",     
+        "startRating" : "4.0"
+      }
+
+
+  ]

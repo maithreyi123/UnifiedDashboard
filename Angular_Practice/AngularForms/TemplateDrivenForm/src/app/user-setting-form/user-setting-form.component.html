@@ -1,0 +1,150 @@
+<html>
+
+<head>
+<!--  1. use form-control as class name for input tag for textboxes 
+     2. use form-check-input as class name for input tag for radio buttons
+     3. form-group shld be the div class name used as a wrapper
+-->
+
+
+
+
+</head>
+
+<body>
+    <div class="container">
+        <h2>User Settings</h2>
+
+        <!-- ngNativeValidate is used for form validation -->
+     <!--  <form #form ="ngForm" ngNativeValidate> -->   <!-- here ngForm is provided by angular for building formsas a style attribute-->
+        <form #form ="ngForm" (ngSubmit)="onSubmit(form)">
+        
+        <!--without using bootstrap-->
+            <!--<input placeholder="text goes here !!" /><button>OK</button>-->
+            
+            <!--with using bootstrap
+               1. download bootstrap using : npm install --save bootstrap
+               2. add path : "node_modules/bootstrap/dist/css/bootstrap.min.css" to  projects->architect->build->styles array of angular.json file
+                  then only boostrap styles will apply  
+
+                **** ---  INSTALL JQUERY ALSO ---- ******
+                "./node_modules/jquery/dist/jquery.js",
+              "./node_modules/bootstrap/dist/js/bootstrap.js"
+
+                1. add this jquery tags to projects->architect->build->scripts array -->
+            <div class="form-group">
+                <label for="name">Name : </label>
+                <!--label for name and input id name shld be same here-->
+                <!--form-control class name is imp for bootstrap styles-->
+                <!-- reuired in input tag defins this field is requirsd and need to be filled  :m we can also use pattern,minlength,maxlength,min,max as attributes for form validations-->
+             
+                <input id="name" name="name" class="form-control" type="text" placeholder="text goes here !!" 
+                [(ngModel)]='userSettings.name' required  #propertyName="ngModel"
+                
+                [class.field-error] ="form.submitted && propertyName.invalid"/>  <!--using ngModel for databinding-->
+             
+                <div [hidden] = "!form.submitted || propertyName.valid"
+                class ="alert alert-danger">Enter a name
+               </div>
+
+
+                <!--hidding error msg if the field is valid or untouched-->
+              <!-- <div [hidden] = "propertyName.valid || propertyName.untouched"
+                 class ="alert alert-danger">Enter a name
+                </div>  -->          
+
+
+            </div>
+
+            <!--  Checkboxes : here type="checkbox" is important  -->
+            <div class="form-check form-group">
+
+           <!--  <input id="checkbox" name="check" class="form-check-input" type="checkbox" ngModel /> -->    
+           <input id="checkbox" name="check" class="form-check-input" type="checkbox" [(ngModel)]='userSettings.check' />  <!--name="check" tag is imprt for binding data-->
+                <label for="checkbox">email special offer </label>
+
+            </div>
+            <!--Radio buttons   :    here type="radio" is important   -->
+            <div class="form-group">
+                    <div class="form-check form-group">
+                        <!--*******************  Remember   ******************-->
+                                  <!--NOTE :  the name in input tag must be same for all the checkboxes, as it belongs to one form
+                                if we give diffenrent name then evry box becoms selected
+                            
+                            -->
+                            <input id="checkbox" name="ExampleforRadio" class="form-check-input" type="radio" [(ngModel)]='userSettings.ExampleforRadio'/>
+                            <label for="checkbox">light</label>
+            
+                    </div>
+                        <div class="form-check form-group">
+                     
+                                <input id="checkbox" name="ExampleforRadio" class="form-check-input" type="radio" [(ngModel)]='userSettings.ExampleforRadio'/>
+                                <label for="checkbox">Medium</label>
+                
+                         </div>
+                        <div class="form-check form-group">
+
+                                    <input id="checkbox" name="ExampleforRadio" class="form-check-input" type="radio" [(ngModel)]='userSettings.ExampleforRadio'/>
+                                    <label for="checkbox">Dark</label>
+                    
+                             </div>
+
+
+
+            </div>
+
+            <!--  select and options example -->
+
+            <div class="form-group">
+                     
+                    
+                    <label for="selectOption">Subscription Type :</label>
+                   <select id="selectOption" class="form-control" name="select" [(ngModel)]='userSettings.select'>  <!--here class name is v.v.imp, we must add form-control as class to use bootstrap styles then only it works-->
+                 <!--   <option>Monthly</option>
+                     <option>Annual</option>
+                     <option>Lifetime</option>--> 
+                    
+                    <option *ngFor='let type of subsTypes | async'>
+                          {{type}}
+                        </option>
+                      
+                    </select>
+    
+             </div>
+
+             <!--using textarea tag for notes, description tags-->
+             <div class="form-group">
+
+                    <label for="textbox">Notes: </label>
+                    <textarea id = "textbox" name="textbox" class="form-control" rows="3" [(ngModel)]='userSettings.textbox'></textarea>
+    
+             </div>
+             <!-- for password example : here type="password" is important
+               we can also have type=date , color all these r provided by bootstrap styles
+            
+            -->
+
+             <div class="form-group">
+                    <label for="password">password </label>
+                    <input id="password" name="password" type="password" class="form-control" ngModel/>
+    
+             </div>
+
+
+
+            <div class="form-group">
+                <button class="btn btn-primary">send</button>
+            </div>
+
+        </form>
+
+    </div>
+
+ <!--   {{ form.value | json }} -->   <!-- form.value gives the values of the forms using name attribute and providing ngModel and pipe json is used to transform the data into json object-->
+
+ {{ userSettings | json}}
+
+
+</body>
+
+</html>
